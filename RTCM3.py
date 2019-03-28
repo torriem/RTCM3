@@ -88,6 +88,18 @@ def bitValue(bitArray,Start,Length):
         s +=bitArray[i]
     return(int(s,2))
 
+def bitValueSigned(bitArray,Start,Length):
+#    print Start,Length
+    s = ""
+    for i in range (Start,Start+Length):
+        s +=bitArray[i]
+    
+    if bitArray[Start] == '0':
+        return(int(s,2))
+    else:
+        # two's complement
+        return(-(((int(s,2) ^ (0x3fffffffff)) + 1)))
+
 #(**********************************************************************
 # * Compute the CRC24 checksum using a lookup table method.
 # *
@@ -161,7 +173,7 @@ class RTCM3:
                     field["value"]= bitValue(bitArray,current_bit,field["bitlength"])
                     current_bit+=field["bitlength"]
                 elif field["type"] == "INT" :
-                    field["value"]= bitValue(bitArray,current_bit,field["bitlength"])
+                    field["value"]= bitValueSigned(bitArray,current_bit,field["bitlength"])
                     current_bit+=field["bitlength"]
                 elif field["type"] == "REPEAT" :
                     field["value"]= bitValue(bitArray,current_bit,field["bitlength"])
