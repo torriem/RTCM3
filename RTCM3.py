@@ -98,7 +98,7 @@ def bitValueSigned(bitArray,Start,Length):
         return(int(s,2))
     else:
         # two's complement
-        return(-(((int(s,2) ^ (0x3fffffffff)) + 1)))
+        return(-(((int(s,2) ^ (2**Length-1)) + 1)))
 
 #(**********************************************************************
 # * Compute the CRC24 checksum using a lookup table method.
